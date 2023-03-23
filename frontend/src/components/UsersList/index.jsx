@@ -28,11 +28,12 @@ const UsersList = ({ users, onDeleteUser }) => {
 			) : (
 				''
 			);
-		const healthComment = user.sessions.length !== 0 && (
-			<div className={styles.comment}>
-				{user.sessions[user.sessions.length - 1].comment}
-			</div>
-		);
+		const healthComment = user.sessions.length !== 0 &&
+			user.sessions[user.sessions.length - 1].comment !== '' && (
+				<div className={styles.comment}>
+					{user.sessions[user.sessions.length - 1].comment}
+				</div>
+			);
 		return {
 			id: user.id,
 			name: user.name,
