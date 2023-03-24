@@ -1,4 +1,6 @@
 import React from 'react';
+import saveData from '../../api/saveData';
+
 import styles from './styles.module.scss';
 
 // Component for creating a new user
@@ -8,13 +10,13 @@ export const AddSession = function ({ onHideModal, userId, onRefresh }) {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		const form = new FormData(e.target);
-		const time = form.get('time');
+		const date = form.get('date');
 		const feedback = form.get('feedback');
 		const comment = form.get('comment');
 
 		// Create new session object
 		const newSession = {
-			time,
+			date,
 			feedback,
 			comment,
 		};
@@ -33,6 +35,7 @@ export const AddSession = function ({ onHideModal, userId, onRefresh }) {
 		if (response.ok) {
 			// Clear form fields on successful submission
 			e.target.reset();
+			saveData();
 			onHideModal();
 			onRefresh();
 		}
@@ -41,8 +44,8 @@ export const AddSession = function ({ onHideModal, userId, onRefresh }) {
 	return (
 		<form onSubmit={handleSubmit} className={styles.addSession}>
 			<label>
-				Time:
-				<input type='datetime-local' name='time' />
+				Date:
+				<input type='date' name='date' required />
 			</label>
 			<label>
 				Feedback:

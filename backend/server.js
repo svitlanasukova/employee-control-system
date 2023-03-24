@@ -39,9 +39,10 @@ app.post('/users', (req, res) => {
 
 // PUT method to add a new session for a user
 app.put('/users/:id/sessions', (req, res) => {
-	const { time, feedback, comment } = req.body;
+	const { date, feedback, comment } = req.body;
 	const user = data.users.find(u => u.id == req.params.id);
-	user.sessions.push({ time, feedback, comment });
+	const id = user.sessions.length + 1;
+	user.sessions.push({ id, date, feedback, comment });
 	res.send(`Session added for user ${user.id}`);
 });
 
@@ -52,7 +53,7 @@ app.patch('/users/:id', (req, res) => {
 	if (req.body.surname) user.surname = req.body.surname;
 	if (req.body.sessionId && req.body.sessionData) {
 		const session = user.sessions.find(s => s.id == req.body.sessionId);
-		session.time = req.body.sessionData.time || session.time;
+		session.date = req.body.sessionData.date || session.date;
 		session.feedback = req.body.sessionData.feedback || session.feedback;
 		session.comment = req.body.sessionData.comment || session.comment;
 	}
@@ -65,6 +66,20 @@ app.delete('/users/:id', (req, res) => {
 	if (userIndex !== -1) {
 		data.users.splice(userIndex, 1);
 		res.send(`User ${req.params.id} deleted`);
+	} else {
+		res.status(404).send('User not found');
+	}
+});
+
+// DELETE method to delete user session
+app.delete('/users/:id/sessions/:sessionId', (req, res) => {
+	const userIndex = data.users.findIndex(u => u.id == req.params.id);
+	const userSessionIndex = data.users[userIndex].sessions.findIndex(
+		s => s.id == req.params.sessionId,
+	);
+	if (userIndex !== -1) {
+		data.users[userIndex].sessions.splice(userSessionIndex, 1);
+		res.send(`Users ${req.params.id} session ${req.params.sessionId} deleted`);
 	} else {
 		res.status(404).send('User not found');
 	}

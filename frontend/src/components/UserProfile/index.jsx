@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { AddSession } from '../addSession';
 import Modal from '../Modal';
+import UserSessions from '../UserSessions';
 
 import styles from './styles.module.scss';
 
 const UserProfile = ({ user, onRefreshUser }) => {
+	console.log(user);
 	const [addSessionModalIsVisible, setSessionUserModalIsVisible] =
 		useState(false);
 
@@ -38,28 +40,11 @@ const UserProfile = ({ user, onRefreshUser }) => {
 			)}
 			<button onClick={showAddSessionModalHandler}>Add session</button>
 			{user.sessions.length > 0 && (
-				<div>
-					<h2>Sessions:</h2>
-					<ul>
-						{user.sessions.reverse().map(session => (
-							<li key={session.feedback * Math.random()}>
-								<p>
-									<strong>Feedback:</strong> {session.feedback}
-								</p>
-								{session.time && (
-									<p>
-										<strong>Time:</strong> {session.time}
-									</p>
-								)}
-								{session.comment && (
-									<p>
-										<strong>Comment:</strong> {session.comment}
-									</p>
-								)}
-							</li>
-						))}
-					</ul>
-				</div>
+				<UserSessions
+					sessions={user.sessions}
+					onRefresh={onRefreshUser}
+					userId={user.id}
+				/>
 			)}
 		</div>
 	);
