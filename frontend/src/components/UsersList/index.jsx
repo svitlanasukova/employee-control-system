@@ -55,13 +55,17 @@ const UsersList = ({ users, onDeleteUser }) => {
 	const [sortType, setSortType] = useState('DESC');
 
 	useEffect(() => {
+		const transformedUsers = transformUsers(users).sort(
+			(a, b) => b.health - a.health,
+		);
 		if (!isSorted) {
-			const transformedUsers = transformUsers(users).sort(
-				(a, b) => b.health - a.health,
-			);
 			setUsersList(transformedUsers);
 		}
-	}, [transformUsers, users, isSorted]);
+		if (users.length !== usersList.length) {
+			setUsersList(transformedUsers);
+			setSortType('DESC');
+		}
+	}, [transformUsers, users, isSorted, usersList.length]);
 
 	const navigate = useNavigate();
 
