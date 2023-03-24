@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 const TeamHealth = ({ users }) => {
+	const [progress, setProgress] = useState(0);
+
+	const usersHasSessions = users.reduce(
+		(curr, user) => (user.sessions.length > 0 ? curr + 1 : curr),
+		0,
+	);
 	const health =
 		users.length === 0
 			? 0
@@ -17,10 +23,8 @@ const TeamHealth = ({ users }) => {
 						} else {
 							return currHealth;
 						}
-					}, 0) / users.length,
+					}, 0) / usersHasSessions,
 			  );
-
-	const [progress, setProgress] = useState(0);
 
 	useEffect(() => {
 		if (health > progress) {
