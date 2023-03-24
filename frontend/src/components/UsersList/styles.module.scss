@@ -8,7 +8,7 @@
 	.header {
 		font-weight: bold;
 		div:last-of-type {
-			text-align: center;
+			text-align: right;
 		}
 	}
 	.list {
@@ -19,7 +19,7 @@
 			border-bottom: 1px solid #ddd;
 			padding: 1rem 0;
 			div:last-of-type {
-				text-align: center;
+				text-align: right;
 			}
 			.health {
 				position: relative;
