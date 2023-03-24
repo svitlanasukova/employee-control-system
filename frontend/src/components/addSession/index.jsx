@@ -46,7 +46,7 @@ export const AddSession = function ({ onHideModal, userId, onRefresh }) {
 			</label>
 			<label>
 				Feedback:
-				<input type='number' name='feedback' required />
+				<input type='number' name='feedback' required max={10} />
 			</label>
 			<label>
 				Comment:
