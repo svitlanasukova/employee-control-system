@@ -16,15 +16,15 @@ const UsersList = ({ users, onDeleteUser }) => {
 				? healthNum
 				: healthNum.toFixed(1);
 		const healthStatus =
-			user.sessions.length > 1 ? (
-				+user.sessions[user.sessions.length - 1].feedback >=
+			user.sessions.length < 1 ||
+			+user.sessions[user.sessions.length - 1].feedback ===
 				+user.sessions[user.sessions.length - 2].feedback ? (
-					<span style={{ color: 'green' }}>↑</span>
-				) : (
-					<span style={{ color: 'red' }}>↓</span>
-				)
-			) : (
 				''
+			) : +user.sessions[user.sessions.length - 1].feedback >
+			  +user.sessions[user.sessions.length - 2].feedback ? (
+				<span style={{ color: 'green' }}>↑</span>
+			) : (
+				<span style={{ color: 'red' }}>↓</span>
 			);
 		const healthComment = user.sessions.length !== 0 &&
 			user.sessions[user.sessions.length - 1].comment !== '' && (
