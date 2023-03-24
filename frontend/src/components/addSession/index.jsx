@@ -4,11 +4,10 @@ import styles from './styles.module.scss';
 // Component for creating a new user
 
 // Component for adding a session for an existing user
-export const AddSession = function ({ onHideModal, onReshreshUserList }) {
+export const AddSession = function ({ onHideModal, userId, onRefresh }) {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		const form = new FormData(e.target);
-		const userId = form.get('userId');
 		const time = form.get('time');
 		const feedback = form.get('feedback');
 		const comment = form.get('comment');
@@ -35,17 +34,12 @@ export const AddSession = function ({ onHideModal, onReshreshUserList }) {
 			// Clear form fields on successful submission
 			e.target.reset();
 			onHideModal();
-			console.log(userId);
-			onReshreshUserList();
+			onRefresh();
 		}
 	};
 
 	return (
 		<form onSubmit={handleSubmit} className={styles.addSession}>
-			<label>
-				User ID:
-				<input type='text' name='userId' required />
-			</label>
 			<label>
 				Time:
 				<input type='datetime-local' name='time' />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
@@ -39,9 +40,22 @@ const UsersList = ({ users, onDeleteUser }) => {
 			health,
 			healthStatus,
 			healthComment,
-			toImprove: user.toImprove,
+			toImprove:
+				user.sessions.length > 0 &&
+				user.sessions[user.sessions.length - 1].comment
+					? user.sessions[user.sessions.length - 1].comment
+					: '',
 		};
 	});
+
+	const navigate = useNavigate();
+
+	const navigateToUserProfileHandler = event => {
+		const id = event.target.closest('.' + styles.item).dataset.id;
+		if (id && event.target.tagName.toLowerCase() !== 'button') {
+			navigate('/' + id);
+		}
+	};
 
 	return (
 		<div className={styles.usersList}>
@@ -52,10 +66,10 @@ const UsersList = ({ users, onDeleteUser }) => {
 				<div>To improve</div>
 				<div>Actions</div>
 			</div>
-			<div className={styles.list}>
+			<div className={styles.list} onClick={navigateToUserProfileHandler}>
 				{transformedUsers.map(user => {
 					return (
-						<div key={user.id} className={styles.item}>
+						<div key={user.id} className={styles.item} data-id={user.id}>
 							<div>{user.name}</div>
 							<div>{user.surname}</div>
 							<div className={styles.health}>

@@ -6,7 +6,6 @@ import styles from './styles.module.scss';
 export const CreateUser = function ({ onHideModal, onReshreshUserList }) {
 	const [name, setName] = useState('');
 	const [surname, setSurname] = useState('');
-	const [toImprove, setToImprove] = useState('');
 
 	const handleSubmit = async e => {
 		e.preventDefault();
@@ -16,7 +15,6 @@ export const CreateUser = function ({ onHideModal, onReshreshUserList }) {
 			name,
 			surname,
 			sessions: [],
-			toImprove,
 		};
 
 		// Send POST request to server to create new user
@@ -56,14 +54,6 @@ export const CreateUser = function ({ onHideModal, onReshreshUserList }) {
 					type='text'
 					value={surname}
 					onChange={e => setSurname(e.target.value)}
-					required
-				/>
-			</label>
-			<label>
-				To improve:
-				<textarea
-					value={toImprove}
-					onChange={e => setToImprove(e.target.value)}
 					required
 				/>
 			</label>
