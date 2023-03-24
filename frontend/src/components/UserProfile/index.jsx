@@ -41,7 +41,7 @@ const UserProfile = ({ user, onRefreshUser }) => {
 				<div>
 					<h2>Sessions:</h2>
 					<ul>
-						{user.sessions.map(session => (
+						{user.sessions.reverse().map(session => (
 							<li key={session.feedback * Math.random()}>
 								<p>
 									<strong>Feedback:</strong> {session.feedback}
