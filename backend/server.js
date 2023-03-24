@@ -31,9 +31,9 @@ app.get('/users/:id', (req, res) => {
 
 // POST method to create a new user
 app.post('/users', (req, res) => {
-	const { name, surname, sessions, toImprove } = req.body;
+	const { name, surname, sessions } = req.body;
 	const id = data.users.length + 1;
-	data.users.push({ id, name, surname, sessions, toImprove });
+	data.users.push({ id, name, surname, sessions });
 	res.send(`User ${id} created`);
 });
 
