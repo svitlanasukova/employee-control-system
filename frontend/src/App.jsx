@@ -59,10 +59,15 @@ function App() {
 		}
 	};
 
+	const usersHasSessions = users.reduce(
+		(curr, user) => (user.sessions.length > 0 ? curr + 1 : curr),
+		0,
+	);
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.header}>
-				<TeamHealth users={users} />
+				{usersHasSessions > 0 && <TeamHealth users={users} />}
 				{addSessionModalIsVisible && (
 					<Modal onClose={hideAddSessionModalHandler}>
 						<h2>Create session</h2>

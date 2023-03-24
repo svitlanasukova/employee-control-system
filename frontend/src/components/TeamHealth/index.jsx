@@ -69,7 +69,8 @@ const TeamHealth = ({ users }) => {
 		<svg width={size} height={size} viewBox={viewBox}>
 			<circle
 				fill='none'
-				stroke='#ccc'
+				stroke={color}
+				style={{ opacity: 0.3, transition: 'all 0.3s' }}
 				cx={size / 2}
 				cy={size / 2}
 				r={radius}
