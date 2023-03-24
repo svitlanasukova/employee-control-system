@@ -9,9 +9,6 @@
 		div:last-of-type {
 			text-align: right;
 		}
-		.healthTitle {
-			cursor: pointer;
-		}
 	}
 	.list {
 		margin-top: 1rem;
@@ -20,44 +17,8 @@
 		.item {
 			border-bottom: 1px solid #ddd;
 			padding: 1rem 0;
-			cursor: pointer;
 			div:last-of-type {
 				text-align: right;
-			}
-			.health {
-				position: relative;
-				cursor: pointer;
-				span {
-					margin-left: 0.5rem;
-				}
-				&:hover {
-					.comment {
-						opacity: 1;
-						visibility: visible;
-					}
-				}
-				.comment {
-					position: absolute;
-					opacity: 0;
-					visibility: hidden;
-					background: #cccccc;
-					padding: 0.5rem;
-					bottom: calc(100% + 1rem);
-					left: 3rem;
-					transition: all 0.3s ease-in-out;
-					font-size: 14px;
-					&::after {
-						content: '';
-						width: 0;
-						height: 0;
-						border-style: solid;
-						border-width: 8px 8px 0 0;
-						border-color: #cccccc transparent transparent transparent;
-						position: absolute;
-						left: 0;
-						top: 100%;
-					}
-				}
 			}
 		}
 	}
