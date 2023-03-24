@@ -6,6 +6,7 @@ import { AddSession } from './components/addSession';
 import UsersList from './components/UsersList';
 
 import styles from './App.module.scss';
+import TeamHealth from './components/TeamHealth';
 
 function App() {
 	const [users, setUsers] = useState([]);
@@ -54,13 +55,14 @@ function App() {
 		if (!response.ok) {
 			throw new Error('Error! Failed to delete user!');
 		} else {
-			setUsers(prevUsers => prevUsers.filter(user => user.id !== id));
+			fetchUsers();
 		}
 	};
 
 	return (
 		<div className={styles.container}>
-			<div className={styles.actions}>
+			<div className={styles.header}>
+				<TeamHealth users={users} />
 				{addSessionModalIsVisible && (
 					<Modal onClose={hideAddSessionModalHandler}>
 						<h2>Create session</h2>
@@ -82,7 +84,6 @@ function App() {
 				)}
 				<button onClick={showAddUserModalHandler}>Add user</button>
 			</div>
-
 			<UsersList users={users} onDeleteUser={deleteUserHandler} />
 		</div>
 	);

@@ -3,12 +3,15 @@
 	margin: 0 auto;
 }
 
-.actions {
+.header {
 	display: flex;
 	justify-content: flex-end;
 	gap: 1rem;
 	button {
 		padding: 0.5rem 1rem;
 		font-size: 1rem;
+	}
+	svg {
+		margin-right: auto;
 	}
 }

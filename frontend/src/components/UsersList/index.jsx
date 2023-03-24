@@ -3,8 +3,6 @@ import React from 'react';
 import styles from './styles.module.scss';
 
 const UsersList = ({ users, onDeleteUser }) => {
-	console.log(users);
-
 	const transformedUsers = users.map(user => {
 		const healthNum =
 			user.sessions.reduce(

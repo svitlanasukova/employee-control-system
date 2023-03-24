@@ -20,7 +20,6 @@ export const AddSession = function ({ onHideModal, onReshreshUserList }) {
 			comment,
 		};
 		// Send PUT request to server to add new session for user
-		console.log(userId);
 		const response = await fetch(
 			`${process.env.REACT_APP_API}/users/${userId}/sessions`,
 			{
@@ -36,6 +35,7 @@ export const AddSession = function ({ onHideModal, onReshreshUserList }) {
 			// Clear form fields on successful submission
 			e.target.reset();
 			onHideModal();
+			console.log(userId);
 			onReshreshUserList();
 		}
 	};
