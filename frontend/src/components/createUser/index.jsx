@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import saveData from '../../api/saveData';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../store/users-actions';
 import styles from './styles.module.scss';
 
 // Component for creating a new user
-export const CreateUser = function ({ onHideModal, onReshreshUserList }) {
+export const CreateUser = function ({ onHideModal }) {
 	const [name, setName] = useState('');
 	const [surname, setSurname] = useState('');
+	const dispatch = useDispatch();
 
 	const handleSubmit = async e => {
 		e.preventDefault();
@@ -17,24 +19,13 @@ export const CreateUser = function ({ onHideModal, onReshreshUserList }) {
 			sessions: [],
 		};
 
-		// Send POST request to server to create new user
-		const response = await fetch(`${process.env.REACT_APP_API}/users`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify(newUser),
-		});
-
-		saveData();
-
-		if (response.ok) {
+		try {
+			dispatch(addUser(newUser));
 			onHideModal();
-			onReshreshUserList();
-			// Clear form fields on successful submission
+
 			setName('');
 			setSurname('');
-		}
+		} catch (error) {}
 	};
 
 	return (

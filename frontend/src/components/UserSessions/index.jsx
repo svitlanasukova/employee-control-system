@@ -1,27 +1,15 @@
 import React from 'react';
-import saveData from '../../api/saveData';
+import { useDispatch } from 'react-redux';
 
 import styles from './styles.module.scss';
+import { deleteUserSession } from '../../store/users-actions';
 
 const UserSessions = ({ sessions, onRefresh, userId }) => {
-	const deleteSessionHandler = async id => {
-		const response = await fetch(
-			`${process.env.REACT_APP_API}/users/${userId}/sessions/${id}`,
-			{
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			},
-		);
-
-		if (!response.ok) {
-			throw new Error('Error! Failed to delete user!');
-		} else {
-			saveData();
-			onRefresh();
-		}
+	const dispatch = useDispatch();
+	const deleteSessionHandler = async sessionId => {
+		dispatch(deleteUserSession(userId, sessionId));
 	};
+	const sessionsList = [...sessions].reverse();
 
 	return (
 		<div>
@@ -34,7 +22,7 @@ const UserSessions = ({ sessions, onRefresh, userId }) => {
 					<div>Actions</div>
 				</div>
 				<div className={styles.list}>
-					{sessions.reverse().map(session => (
+					{sessionsList.map(session => (
 						<div className={styles.item} key={session.id}>
 							<div>{session.date}</div>
 							<div>{session.feedback}</div>

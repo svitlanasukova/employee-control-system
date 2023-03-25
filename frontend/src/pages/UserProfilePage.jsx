@@ -1,29 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import UserProfile from '../components/UserProfile';
 
 const UserProfilePage = () => {
 	const { userId } = useParams();
-	const [userData, setUserData] = useState(null);
+	const users = useSelector(state => state.users.items);
+	const userData = users.find(user => user.id === Number(userId));
 	const navigate = useNavigate();
-
-	const fetchUserData = useCallback(async () => {
-		const response = await fetch(
-			`${process.env.REACT_APP_API}/users/` + userId,
-		);
-
-		if (!response.ok) {
-			throw new Error('Could not fetch character.');
-		} else {
-			const data = await response.json();
-
-			setUserData(data);
-		}
-	}, [userId]);
-
-	useEffect(() => {
-		fetchUserData();
-	}, [fetchUserData]);
 
 	const goBackHandler = () => {
 		navigate(-1);
@@ -32,9 +16,7 @@ const UserProfilePage = () => {
 	return (
 		<div>
 			<button onClick={goBackHandler}>← Back</button>
-			{userData && (
-				<UserProfile user={userData} onRefreshUser={fetchUserData} />
-			)}
+			{userData && <UserProfile user={userData} />}
 		</div>
 	);
 };

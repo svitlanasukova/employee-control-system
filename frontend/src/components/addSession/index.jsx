@@ -1,12 +1,14 @@
 import React from 'react';
-import saveData from '../../api/saveData';
+import { useDispatch } from 'react-redux';
+import { addUserSession } from '../../store/users-actions';
 
 import styles from './styles.module.scss';
 
 // Component for creating a new user
 
 // Component for adding a session for an existing user
-export const AddSession = function ({ onHideModal, userId, onRefresh }) {
+export const AddSession = function ({ onHideModal, userId }) {
+	const dispatch = useDispatch();
 	const handleSubmit = async e => {
 		e.preventDefault();
 		const form = new FormData(e.target);
@@ -20,25 +22,10 @@ export const AddSession = function ({ onHideModal, userId, onRefresh }) {
 			feedback,
 			comment,
 		};
-		// Send PUT request to server to add new session for user
-		const response = await fetch(
-			`${process.env.REACT_APP_API}/users/${userId}/sessions`,
-			{
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(newSession),
-			},
-		);
 
-		if (response.ok) {
-			// Clear form fields on successful submission
-			e.target.reset();
-			saveData();
-			onHideModal();
-			onRefresh();
-		}
+		dispatch(addUserSession(userId, newSession));
+		e.target.reset();
+		onHideModal();
 	};
 
 	return (

@@ -15,15 +15,6 @@ export const UpdateUser = function () {
 			sessionComment,
 		} = form.getAll();
 
-		console.log(
-			userId,
-			name,
-			surname,
-			sessionDate,
-			sessionFeedback,
-			sessionComment,
-		);
-
 		// Create object with updated user data
 		const updatedUser = {};
 

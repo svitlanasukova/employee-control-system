@@ -1,9 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import styles from './styles.module.scss';
 
-const UsersList = ({ users, onDeleteUser }) => {
+const UsersList = ({ onDeleteUser }) => {
+	const users = useSelector(state => state.users.items);
+
 	const transformUsers = useCallback(users => {
 		return users.map(user => {
 			const healthNum =

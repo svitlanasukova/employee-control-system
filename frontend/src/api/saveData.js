@@ -11,7 +11,7 @@ const saveData = async () => {
 			throw new Error('Data saving failed!');
 		}
 	} catch (error) {
-		console.log(error);
+		throw new Error(error.message);
 	}
 };
 

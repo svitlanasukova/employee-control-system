@@ -5,8 +5,7 @@ import UserSessions from '../UserSessions';
 
 import styles from './styles.module.scss';
 
-const UserProfile = ({ user, onRefreshUser }) => {
-	console.log(user);
+const UserProfile = ({ user }) => {
 	const [addSessionModalIsVisible, setSessionUserModalIsVisible] =
 		useState(false);
 
@@ -34,17 +33,12 @@ const UserProfile = ({ user, onRefreshUser }) => {
 					<AddSession
 						onHideModal={hideAddSessionModalHandler}
 						userId={user.id}
-						onRefresh={onRefreshUser}
 					/>
 				</Modal>
 			)}
 			<button onClick={showAddSessionModalHandler}>Add session</button>
 			{user.sessions.length > 0 && (
-				<UserSessions
-					sessions={user.sessions}
-					onRefresh={onRefreshUser}
-					userId={user.id}
-				/>
+				<UserSessions sessions={user.sessions} userId={user.id} />
 			)}
 		</div>
 	);
