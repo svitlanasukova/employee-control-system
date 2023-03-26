@@ -28,6 +28,20 @@ const usersSlice = createSlice({
 				id: user.sessions.length + 1,
 			});
 		},
+		updateUserSession(state, action) {
+			const user = state.items.find(user => user.id === action.payload.userId);
+			const userSessionIndex = user.sessions.findIndex(
+				session => session.id === action.payload.sessionId,
+			);
+			if (userSessionIndex > -1) {
+				user.sessions[userSessionIndex] = {
+					id: action.payload.sessionId,
+					date: action.payload.sessionData.date,
+					feedback: action.payload.sessionData.feedback,
+					comment: action.payload.sessionData.comment,
+				};
+			}
+		},
 	},
 });
 

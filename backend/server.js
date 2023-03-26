@@ -60,6 +60,18 @@ app.patch('/users/:id', (req, res) => {
 	res.send(`User ${user.id} updated`);
 });
 
+// UPDATE method to update user session data
+app.patch('/users/:id/sessions/:sessionId', (req, res) => {
+	const user = data.users.find(u => u.id == req.params.id);
+	if (req.body.sessionId && req.body.sessionData) {
+		const session = user.sessions.find(s => s.id == req.body.sessionId);
+		session.date = req.body.sessionData.date || session.date;
+		session.feedback = req.body.sessionData.feedback || session.feedback;
+		session.comment = req.body.sessionData.comment || session.comment;
+	}
+	res.send(`User\`s ${user.id} session ${req.body.sessionId} was updated`);
+});
+
 // DELETE method to delete user data
 app.delete('/users/:id', (req, res) => {
 	const userIndex = data.users.findIndex(u => u.id == req.params.id);

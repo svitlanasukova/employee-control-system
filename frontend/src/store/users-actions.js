@@ -123,3 +123,30 @@ export const addUserSession = (userId, session) => {
 		}
 	};
 };
+
+export const editUserSession = (userId, sessionId, sessionData) => {
+	return async dispatch => {
+		try {
+			// Send PUT request to server to add new session for user
+			const response = await fetch(
+				`${process.env.REACT_APP_API}/users/${userId}/sessions/${sessionId}`,
+				{
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({ sessionId, sessionData }),
+				},
+			);
+
+			if (response.ok) {
+				dispatch(
+					usersActions.updateUserSession({ userId, sessionId, sessionData }),
+				);
+				saveData();
+			}
+		} catch (error) {
+			throw new Error('Error! Failed to edit user session!');
+		}
+	};
+};
