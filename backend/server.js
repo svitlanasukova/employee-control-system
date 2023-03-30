@@ -34,7 +34,8 @@ app.post('/users', (req, res) => {
 	const { name, surname, sessions } = req.body;
 	const id = data.users.length + 1;
 	data.users.push({ id, name, surname, sessions });
-	res.send(`User ${id} created`);
+	// res.send(`User ${id} created`);
+	res.json({ id: id });
 });
 
 // PUT method to add a new session for a user
@@ -43,7 +44,8 @@ app.put('/users/:id/sessions', (req, res) => {
 	const user = data.users.find(u => u.id == req.params.id);
 	const id = user.sessions.length + 1;
 	user.sessions.push({ id, date, feedback, comment });
-	res.send(`Session added for user ${user.id}`);
+	// res.send(`Session added for user ${user.id}`);
+	res.json({ id: user.id });
 });
 
 // UPDATE method to update user data

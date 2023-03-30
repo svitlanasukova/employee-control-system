@@ -66,7 +66,10 @@ export const addUser = newUser => {
 				throw new Error('Error! Failed to add user!');
 			}
 
-			dispatch(usersActions.addUser(newUser));
+			const data = await response.json();
+			const userId = data.id;
+
+			dispatch(usersActions.addUser({ user: newUser, id: userId }));
 			saveData();
 		} catch (error) {
 			throw new Error('Error! Failed to add user!');
@@ -115,10 +118,13 @@ export const addUserSession = (userId, session) => {
 			);
 
 			if (response.ok) {
-				dispatch(usersActions.addUserSession({ userId, session }));
+				const data = await response.json();
+				const sessionId = data.id;
+				dispatch(usersActions.addUserSession({ userId, session, sessionId }));
 				saveData();
 			}
 		} catch (error) {
+			console.log(error);
 			throw new Error('Error! Failed to add user session!');
 		}
 	};

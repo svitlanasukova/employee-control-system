@@ -24,8 +24,6 @@ const UserSessions = ({ sessions, userId }) => {
 		setEditUserSessionModalIsVisible(false);
 	};
 
-	console.log(sessionsList);
-
 	return (
 		<div>
 			{editUserSessionModalIsVisible && (

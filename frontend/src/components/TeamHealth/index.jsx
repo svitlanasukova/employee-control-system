@@ -7,25 +7,24 @@ const TeamHealth = ({ users }) => {
 		(curr, user) => (user.sessions.length > 0 ? curr + 1 : curr),
 		0,
 	);
-	const health =
-		users.length === 0
-			? 0
-			: Math.round(
-					users.reduce((currHealth, user) => {
-						const userHealth =
-							user.sessions.reduce(
-								(currentNum, session) => currentNum + +session.feedback,
-								0,
-							) / user.sessions.length;
 
-						if (userHealth) {
-							return currHealth + userHealth;
-						} else {
-							return currHealth;
-						}
-					}, 0) / usersHasSessions,
-			  );
+	let health = 0;
+	if (users.length !== 0) {
+		let totalHealth = users.reduce((currHealth, user) => {
+			const userHealth =
+				user.sessions.reduce(
+					(currentNum, session) => currentNum + +session.feedback,
+					0,
+				) / user.sessions.length;
 
+			if (userHealth) {
+				return currHealth + userHealth;
+			} else {
+				return currHealth;
+			}
+		}, 0);
+		health = Math.round(totalHealth / usersHasSessions);
+	}
 	useEffect(() => {
 		if (health > progress) {
 			const timer = setTimeout(() => {

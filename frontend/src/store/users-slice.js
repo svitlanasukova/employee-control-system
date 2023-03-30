@@ -13,7 +13,7 @@ const usersSlice = createSlice({
 			state.items = state.items.filter(user => user.id !== action.payload);
 		},
 		addUser(state, action) {
-			state.items.push({ ...action.payload, id: state.items.length + 1 });
+			state.items.push({ ...action.payload.user, id: action.payload.id });
 		},
 		deleteUserSession(state, action) {
 			const user = state.items.find(user => user.id === action.payload.userId);

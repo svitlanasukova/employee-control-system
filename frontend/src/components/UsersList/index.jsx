@@ -9,34 +9,38 @@ const UsersList = ({ onDeleteUser }) => {
 
 	const transformUsers = useCallback(users => {
 		return users.map(user => {
-			const healthNum =
-				user.sessions.reduce(
-					(currentNum, session) => currentNum + +session.feedback,
-					0,
-				) / user.sessions.length;
-			const health =
-				user.sessions.length === 0
-					? ''
-					: healthNum % 1 === 0
-					? healthNum
-					: healthNum.toFixed(1);
-			const healthStatus =
-				user.sessions.length > 1 ? (
+			const totalHealthNum = user.sessions.reduce(
+				(currentNum, session) => currentNum + +session.feedback,
+				0,
+			);
+			const averageРealthNum = totalHealthNum / user.sessions.length;
+			let health = '';
+			if (user.sessions.length !== 0) {
+				if (averageРealthNum % 1 === 0) {
+					health = averageРealthNum;
+				} else {
+					health = averageРealthNum.toFixed(1);
+				}
+			}
+			let healthStatus = '';
+			if (user.sessions.length > 1) {
+				if (
 					+user.sessions[user.sessions.length - 1].feedback >=
-					+user.sessions[user.sessions.length - 2].feedback ? (
-						<span style={{ color: 'green' }}>↑</span>
-					) : (
-						<span style={{ color: 'red' }}>↓</span>
-					)
-				) : (
-					''
-				);
+					+user.sessions[user.sessions.length - 2].feedback
+				) {
+					healthStatus = <span style={{ color: 'green' }}>↑</span>;
+				} else {
+					healthStatus = <span style={{ color: 'red' }}>↓</span>;
+				}
+			}
+
 			const healthComment = user.sessions.length !== 0 &&
 				user.sessions[user.sessions.length - 1].comment !== '' && (
 					<div className={styles.comment}>
 						{user.sessions[user.sessions.length - 1].comment}
 					</div>
 				);
+
 			return {
 				id: user.id,
 				name: user.name,
